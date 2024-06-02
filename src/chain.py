@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
 
@@ -13,39 +13,37 @@ load_dotenv()
 
 # create the OpenAI model
 openai_api_key = os.getenv("OPENAI_API_KEY")
-llm = ChatOpenAI(model="gpt-4-turbo-2024-04-09")
+llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-# create the vectorstore
-embedding = OpenAIEmbeddings(openai_api_key=openai_api_key)
-vectorstore = Chroma(persist_directory="../chroma_db", embedding_function=embedding)
-
-# create the retriever and retrieve documents
-retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 6})
 
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
 
 
-template = """Verwende den folgenden Kontext um die Frage am Ende zu beantworten. Gib nur eine Antwort, wenn 
-du die Fakten dazu im Kontext erhalten hast. Verwende kein eigenes Wissen, sondern sage, dass du es nicht weisst.
-Es darf unter keinen Umständen eine Antwort erfunden werden. Fasse alles in maximal fünf Sätzen
-zusammen. Verwende eine Liste mit Aufzählungszeichen, wenn es hilfreich ist. 
+def print_input(input):
+    print(input)
+    return input
 
-Kontext: {context}
 
-Frage: {question}
+def chain(retriever):
+    template = """Du bist ein hilfreicher Assistent und beantwortest Fragen zum Steuerbuch. Fasse alles in präzise und in klaren Worten
+    zusammen. Verwende eine Liste mit Aufzählungszeichen, aber nur wenn es hilfreich ist. 
+    Verwende den folgenden Kontext um die Frage am Ende zu beantworten. Gib nur eine Antwort, wenn 
+    du die Fakten dazu im Kontext erhalten hast. Verwende kein eigenes Wissen, sondern sage, dass du es nicht weisst.
+    Es darf unter keinen Umständen eine Antwort erfunden werden. 
+    
+    Kontext: {context}
+    
+    Frage: {question}
+    
+    Hilfreiche Antwort:"""
+    custom_rag_prompt = PromptTemplate.from_template(template)
 
-Hilfreiche Antwort:"""
-custom_rag_prompt = PromptTemplate.from_template(template)
-
-rag_chain = (
-        {"context": retriever | format_docs, "question": RunnablePassthrough()}
-        | custom_rag_prompt
-        | llm
-        | StrOutputParser()
-)
-
-result = rag_chain.invoke("Was gilt es bezüglich Erbschaften zu beachten?")
-#result = rag_chain.invoke("Kann ich Steuern hinterziehen? Falls du eine Antwwort findest, gib auch den relevanten Teil der Anfrage zurück.")
-print(result)
+    rag_chain = (
+            {"context": retriever | format_docs, "question": RunnablePassthrough()}
+            | custom_rag_prompt
+            | llm
+            | StrOutputParser()
+    )
+    return rag_chain
 

@@ -4,18 +4,22 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
+from langchain.docstore.document import Document
+
 
 
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
-pdf_folder_path = "../raw_data"
+pdf_folder_path = "../../raw_data"
 documents = []
 for file in os.listdir(pdf_folder_path):
     if file.endswith('.pdf'):
         pdf_path = os.path.join(pdf_folder_path, file)
         loader = PyPDFLoader(pdf_path)
         documents.extend(loader.load())
+print(documents[0])
+print("Number of documents loaded: " + str(len(documents)))
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
 chunked_docs = text_splitter.split_documents(documents)
 print("Number of chunks loaded into vectorstore: " + str(len(chunked_docs)))

@@ -1,0 +1,15 @@
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+    "question": "Kann man auch nur teilweise aus der Kirche austreten? Falls ja, was muss man beachten?"
+}
+
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+"question": "Welche Entschädigungen als Nationalrat muss ich versteuern?"
+}

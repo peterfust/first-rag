@@ -1,0 +1,71 @@
+import os
+import csv
+from dotenv import load_dotenv
+from langchain.storage import InMemoryStore
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_openai import OpenAIEmbeddings
+from langchain.retrievers import ParentDocumentRetriever
+from src.helper.functions import one_doc_per_pdf_page
+
+file_path = '../raw_data/content.csv'
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+
+def load_documents():
+    # Load the documents from the csv file
+    with open(file_path, mode='r', encoding='utf-8') as file:
+        reader = csv.reader(file, delimiter=';')
+        # Skip the header row
+        next(reader)
+
+        documents = []
+        for row in reader:
+            # documents.append(one_doc_per_pdf(row))
+            documents.extend(one_doc_per_pdf_page(row))
+
+    # This text splitter is used to create the parent documents of n chars
+    parent_splitter = RecursiveCharacterTextSplitter(chunk_size=2000, chunk_overlap=200)
+
+    # This text splitter is used to create the child documents of n chars
+    child_splitter = RecursiveCharacterTextSplitter(chunk_size=400)
+
+    # The vectorstore to use to index the child chunks
+    vectorstore = Chroma(
+        collection_name="taxes_sg_child_documents",
+        embedding_function=OpenAIEmbeddings(),
+        persist_directory="../chroma_db",
+    )
+
+    # The storage layer for the parent documents
+    docstore = InMemoryStore()
+
+    retriever = ParentDocumentRetriever(
+        vectorstore=vectorstore,
+        docstore=docstore,
+        child_splitter=child_splitter,
+        parent_splitter=parent_splitter,
+    )
+
+    # Performs the following steps:
+    # - Splitting the documents into parent documents (4000 chars)
+    # - Splitting the parent documents into child documents (400 chars)
+    # - Embedding the child documents in the vectorstore
+    # - Storing the parent documents in the docstore
+    retriever.add_documents(documents, ids=None)
+    print("Number of PDF documents loaded: " + str(len(documents)))
+    print("Number of parent docs: " + str(len(list(docstore.yield_keys()))))
+
+    return retriever
+
+    # Directly get the relevant parent documents (via implicit similarity search of sub-documents and then matching parent documents)
+    #relevant_docs = retriever.invoke("Buchhaltung Landwirtschaft")
+    #print(relevant_docs)
+    #print("Number of matching parent docs: " + str(len(relevant_docs)))
+    #print("Length of first matching parent doc: " + str(len(relevant_docs[0].page_content)))
+
+    # Just for curiosity, perform a similarity search on the vectorstore
+    #sub_docs = vectorstore.similarity_search("Buchhaltung Landwirtschaft", k=6)
+    #print("Number of similarity matching child documents: " + str(len(sub_docs)))
+    #for d in sub_docs:
+    #    print(d.metadata)
