@@ -4,7 +4,6 @@ from src.chain import chain
 
 app = Flask(__name__)
 
-# Add your initialization code here
 print("Loading documents...")
 retriever = load_documents()
 print("Documents loaded!")

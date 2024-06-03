@@ -10,11 +10,33 @@ from src.helper.functions import one_doc_per_pdf_page
 from src.helper.functions import one_doc_per_pdf
 
 file_path = '../raw_data/content.csv'
+collection_name = "taxes_sg_child_documents"
+chroma_db_path = "../chroma_db"
+
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 
 
+def create_vectorstore():
+    vectorstore = Chroma(
+        collection_name=collection_name,
+        embedding_function=OpenAIEmbeddings(),
+        persist_directory=chroma_db_path,
+    )
+    return vectorstore
+
+
 def load_documents():
+    # delete the existing vectorstore
+    vectorstore = create_vectorstore()
+    try:
+        vectorstore.delete_collection()
+    except Exception as e:
+        print(e)
+
+    # Create it again to create a new collection
+    vectorstore = create_vectorstore()
+
     # Load the documents from the csv file
     with open(file_path, mode='r', encoding='utf-8') as file:
         reader = csv.reader(file, delimiter=';')
@@ -33,13 +55,6 @@ def load_documents():
 
     # This text splitter is used to create the child documents of n chars
     child_splitter = RecursiveCharacterTextSplitter(chunk_size=400)
-
-    # The vectorstore to use to index the child chunks
-    vectorstore = Chroma(
-        collection_name="taxes_sg_child_documents",
-        embedding_function=OpenAIEmbeddings(),
-        persist_directory="../chroma_db",
-    )
 
     # The storage layer for the parent documents
     docstore = InMemoryStore()
