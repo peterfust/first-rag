@@ -1,7 +1,8 @@
+import csv
+import os
+
 import requests
 from bs4 import BeautifulSoup
-import os
-import csv
 
 # URL der Website
 url = "https://www.sg.ch/steuern-finanzen/steuern/steuerbuch/inhaltsverzeichnis.html"
@@ -10,7 +11,7 @@ url = "https://www.sg.ch/steuern-finanzen/steuern/steuerbuch/inhaltsverzeichnis.
 base_url = "/content/dam/sgch/steuern-finanzen/steuern/steuerbuch"
 
 # Ordner zum Speichern der heruntergeladenen PDFs
-download_folder = "../raw_data/files"
+download_folder = "/raw_data/files"
 os.makedirs(download_folder, exist_ok=True)
 
 # Pfad zur CSV-Datei
@@ -47,7 +48,7 @@ def download_pdfs_and_create_csv(url, base_url, download_folder, csv_file):
                     pdf_name = os.path.basename(pdf_url)
 
                     # Lokaler Pfad zum Speichern des PDFs
-                    local_pdf_path = os.path.join(download_folder, pdf_name)
+                    local_pdf_path = os.path.join('../..' + download_folder, pdf_name)
 
                     # PDF herunterladen
                     pdf_response = requests.get(pdf_url)
@@ -60,7 +61,7 @@ def download_pdfs_and_create_csv(url, base_url, download_folder, csv_file):
                     print(f"Downloaded: {pdf_name}")
 
                     # Relativen Pfad zur Datei für CSV
-                    relative_pdf_path = os.path.join('./' + download_folder, pdf_name)
+                    relative_pdf_path = os.path.join('./..' + download_folder, pdf_name)
 
                     # Eintrag in CSV schreiben
                     writer.writerow([link_name, article_name, relative_pdf_path])
