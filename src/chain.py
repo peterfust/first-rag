@@ -17,6 +17,10 @@ llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
 
 def format_docs(docs):
+    print("Length of docs: ", len(docs))
+    for doc in docs:
+        print(doc.metadata)
+        print(doc.page_content)
     return "\n\n".join(doc.page_content for doc in docs)
 
 

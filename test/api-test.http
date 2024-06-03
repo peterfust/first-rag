@@ -11,5 +11,5 @@ POST http://127.0.0.1:5000/rest/text-analytics
 Content-Type: application/json
 
 {
-"question": "Welche Entschädigungen als Nationalrat muss ich versteuern?"
+"question": "Ich habe Eigenleistungen an meinem Grundstück erbracht, was muss ich beachten?"
 }
