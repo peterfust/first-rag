@@ -1,15 +1,16 @@
-import os
 import csv
+import os
+
 from dotenv import load_dotenv
+from langchain.retrievers import ParentDocumentRetriever
 from langchain.storage import InMemoryStore
-from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 from langchain_openai import OpenAIEmbeddings
-from langchain.retrievers import ParentDocumentRetriever
-from src.helper.functions import one_doc_per_pdf_page
-from src.helper.functions import one_doc_per_pdf
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-file_path = '../raw_data/content.csv'
+from src.helper.functions import one_doc_per_pdf_page
+
+file_path = '../raw_data/content-test.csv'
 collection_name = "taxes_sg_child_documents"
 chroma_db_path = "../chroma_db"
 
