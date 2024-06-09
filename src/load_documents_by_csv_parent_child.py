@@ -63,6 +63,7 @@ def load_documents():
         vectorstore=vectorstore,
         docstore=docstore,
         child_splitter=child_splitter,
+        search_kwargs={"k": 30},
         # parent_splitter=parent_splitter,
     )
 

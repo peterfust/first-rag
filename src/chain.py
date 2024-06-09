@@ -11,14 +11,15 @@ load_dotenv()
 
 # create the OpenAI model
 openai_api_key = os.getenv("OPENAI_API_KEY")
+#cohere_api_key = os.getenv("COHERE_API_KEY")
 llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
 
 def format_docs(docs):
-    print("Length of docs: ", len(docs))
+    print("Number of retrieved docs: ", len(docs))
     for doc in docs:
         print(doc.metadata)
-        print(doc.page_content)
+        # print(doc.page_content)
     return "\n\n".join(doc.page_content for doc in docs)
 
 
