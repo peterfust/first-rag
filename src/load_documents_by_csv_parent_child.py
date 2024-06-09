@@ -10,7 +10,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from src.helper.functions import one_doc_per_pdf_page
 
-file_path = '../raw_data/content-test.csv'
+file_path = '../raw_data/content_test.csv'
 collection_name = "taxes_sg_child_documents"
 chroma_db_path = "../chroma_db"
 

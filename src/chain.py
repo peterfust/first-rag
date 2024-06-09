@@ -34,6 +34,10 @@ co = cohere.Client(cohere_key)
 
 
 def rerank_docs(docs):
+    for key in docs.keys():
+        print(key)
+    print("Number of docs BEFORE reranking: ", len(docs['context']))
+    print(docs['context'][0])
     if docs['context']:
         docs_for_rerank = [doc.page_content for doc in docs['context']]
 
