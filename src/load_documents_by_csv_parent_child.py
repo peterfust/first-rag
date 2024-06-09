@@ -9,7 +9,7 @@ from langchain.retrievers import ParentDocumentRetriever
 from src.helper.functions import one_doc_per_pdf_page
 from src.helper.functions import one_doc_per_pdf
 
-file_path = '../raw_data/content.csv'
+file_path = '../raw_data/content_test.csv'
 collection_name = "taxes_sg_child_documents"
 chroma_db_path = "../chroma_db"
 

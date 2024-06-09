@@ -3,8 +3,7 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
-
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 
 # Load the .env file
 load_dotenv()
@@ -18,12 +17,14 @@ llm = ChatOpenAI(model="gpt-4o", temperature=0)
 def format_docs(docs):
     print("Number of retrieved docs: ", len(docs))
     for doc in docs:
-        print(doc.metadata)
+        print(type(doc))
+        print(doc)
         # print(doc.page_content)
     return "\n\n".join(doc.page_content for doc in docs)
 
 
 def print_input(input):
+    print("INPUT")
     print(input)
     return input
 
