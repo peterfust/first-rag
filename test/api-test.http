@@ -37,3 +37,11 @@ Content-Type: application/json
 {
   "question": "Was gibt es alles bezüglich Kinderabzügen zu beachten?"
 }
+
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+  "question": "Kann ich als Eigenheim Besitzer Abwassergebühren von den Steuern abziehen?"
+}

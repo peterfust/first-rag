@@ -56,7 +56,7 @@ def chain(retriever):
 
     rag_chain = (
             {"context": retriever, "question": RunnablePassthrough()}
-            # | RunnableLambda(rerank_docs_cohere)
+            | RunnableLambda(rerank_docs_cohere)
             | RunnableLambda(format_docs)
             | custom_rag_prompt
             | llm
