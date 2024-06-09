@@ -14,38 +14,30 @@ load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
 llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-
-def format_docs(docs):
-    print("Length of docs: ", len(docs))
-    for doc in docs:
-        print(doc.metadata)
-        print(doc.page_content)
-    return "\n\n".join(doc.page_content for doc in docs)
-
-
-def print_input(input):
-    print(input)
-    return input
-
-
 # create a reranker with cohere
 cohere_key = os.getenv("COHERE_API_KEY")
 co = cohere.Client(cohere_key)
 
 
-def rerank_docs(docs):
-    print("Number of docs BEFORE reranking: ", len(docs['context']))
-    docs_for_rerank = [doc.page_content for doc in docs['context']]
+def format_docs(docs_and_question):
+    print("Length of docs to format: ", len(docs_and_question['context']))
+    docs = "\n\n".join(doc.page_content for doc in docs_and_question['context'])
+    return {"context": docs, "question": docs_and_question['question']}
+
+
+def rerank_docs_cohere(docs_and_question):
+    print("Number of docs BEFORE reranking: ", len(docs_and_question['context']))
+    docs_for_rerank = [doc.page_content for doc in docs_and_question['context']]
     response = co.rerank(
         model="rerank-multilingual-v3.0",
-        query=docs['question'],
+        query=docs_and_question['question'],
         documents=docs_for_rerank,
         top_n=5,
     )
     print("Number of docs AFTER reranking: ", len(response.results))
-    reranked_docs = [docs['context'][res.index] for res in response.results]
-    docs['context'] = reranked_docs
-    return docs
+    reranked_docs = [docs_and_question['context'][res.index] for res in response.results]
+    docs_and_question['context'] = reranked_docs
+    return docs_and_question
 
 
 def chain(retriever):
@@ -64,7 +56,8 @@ def chain(retriever):
 
     rag_chain = (
             {"context": retriever, "question": RunnablePassthrough()}
-            | RunnableLambda(rerank_docs)
+            # | RunnableLambda(rerank_docs_cohere)
+            | RunnableLambda(format_docs)
             | custom_rag_prompt
             | llm
             | StrOutputParser()
