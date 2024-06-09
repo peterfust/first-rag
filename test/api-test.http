@@ -13,3 +13,27 @@ Content-Type: application/json
 {
 "question": "Ich habe Eigenleistungen an meinem Grundstück erbracht, was muss ich beachten?"
 }
+
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+  "question": "Muss ich als Hausbesitzer den Eigenmietwert zusätzlich zum Einkommen versteuern? Falls ja, wie wird er ermittelt? Und gibt es spezielle Regeln für Härtefälle?"
+}
+
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+  "question": "Spannend, erkläre mir bitte alle Details zu der Härtefallregelung bei der Eigenmietwertbesteuerung."
+}
+
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+  "question": "Was gibt es alles bezüglich Kinderabzügen zu beachten?"
+}

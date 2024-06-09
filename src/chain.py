@@ -34,34 +34,26 @@ co = cohere.Client(cohere_key)
 
 
 def rerank_docs(docs):
-    for key in docs.keys():
-        print(key)
     print("Number of docs BEFORE reranking: ", len(docs['context']))
-    print(docs['context'][0])
-    if docs['context']:
-        docs_for_rerank = [doc.page_content for doc in docs['context']]
-
-        response = co.rerank(
-            model="rerank-multilingual-v3.0",
-            query=docs['question'],
-            documents=docs_for_rerank,
-            top_n=3,
-        )
-
-        reranked_docs = [docs['context'][res.index] for res in response.results]
-
-        docs['context'] = reranked_docs
-        return docs
-    else:
-        return docs
+    docs_for_rerank = [doc.page_content for doc in docs['context']]
+    response = co.rerank(
+        model="rerank-multilingual-v3.0",
+        query=docs['question'],
+        documents=docs_for_rerank,
+        top_n=5,
+    )
+    print("Number of docs AFTER reranking: ", len(response.results))
+    reranked_docs = [docs['context'][res.index] for res in response.results]
+    docs['context'] = reranked_docs
+    return docs
 
 
 def chain(retriever):
-    template = """Du bist ein hilfreicher Assistent und beantwortest Fragen zum Steuerbuch. Fasse alles in präzise und in klaren Worten
-    zusammen. Verwende eine Liste mit Aufzählungszeichen, aber nur wenn es hilfreich ist. 
-    Verwende den folgenden Kontext um die Frage am Ende zu beantworten. Gib nur eine Antwort, wenn 
-    du die Fakten dazu im Kontext erhalten hast. Verwende kein eigenes Wissen, sondern sage, dass du es nicht weisst.
-    Es darf unter keinen Umständen eine Antwort erfunden werden. 
+    template = """Du bist ein hilfreicher Assistent und beantwortest Fragen zum Steuerbuch in einem höflichen Ton. 
+    Fasse alles in präzise und in klaren Worten zusammen. Verwende eine Liste mit Aufzählungszeichen, aber nur,
+    wenn es hilfreich ist. Verwende den folgenden Kontext um die Frage am Ende zu beantworten. Gib nur eine Antwort, 
+    wenn du die Fakten dazu im Kontext erhalten hast. Verwende kein eigenes Wissen, sondern sage, dass du es nicht 
+    weisst. Es darf unter keinen Umständen eine Antwort erfunden werden. 
     
     Kontext: {context}
     
