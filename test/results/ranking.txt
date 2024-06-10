@@ -1,0 +1,108 @@
+Loading documents...
+Number of PDFs processed: 247
+Number of documents loaded (one doc per PDF page): 926
+Number of parent docs: 926
+Documents loaded!
+ * Serving Flask app 'flask_server'
+ * Debug mode: off
+
+LLM Reranking - Number of documents BEFORE reranking:  5
+LLM Reranking - Documents marked as relevant:  ['./../raw_data/files/003_1.pdf__2', './../raw_data/files/003_1.pdf__3', './../raw_data/files/003_1.pdf__1', './../raw_data/files/003_1.pdf__0']
+LLM Reranking - Documents marked as not relevant:  ['./../raw_data/files/020_1.pdf__3']
+LLM Reranking - Number of documents AFTER reranking:  4
+Length of docs to format:  4
+Cohere Reranking - Number of documents BEFORE reranking:  5
+Cohere Reranking - Documents marked as relevant:  ['./../raw_data/files/003_1.pdf__2', './../raw_data/files/003_1.pdf__3', './../raw_data/files/003_1.pdf__1', './../raw_data/files/003_1.pdf__0']
+Cohere Reranking - Documents marked as not relevant:  ['./../raw_data/files/020_1.pdf__3']
+Cohere - Number of documents AFTER reranking:  5
+document=None index=0 relevance_score=0.9901782 - ./../raw_data/files/003_1.pdf__2
+document=None index=1 relevance_score=0.98235554 - ./../raw_data/files/003_1.pdf__3
+document=None index=2 relevance_score=0.8533026 - ./../raw_data/files/003_1.pdf__1
+document=None index=3 relevance_score=0.72036827 - ./../raw_data/files/003_1.pdf__0
+document=None index=4 relevance_score=0.001477943 - ./../raw_data/files/020_1.pdf__3
+Length of docs to format:  5
+
+
+LLM Reranking - Number of documents BEFORE reranking:  6
+LLM Reranking - Documents marked as relevant:  ['029_7.pdf', '029_8.pdf', '137_1.pdf']
+LLM Reranking - Documents marked as not relevant:  ['131_1.pdf', '052_4.pdf', '132_4.pdf']
+LLM Reranking - Number of documents AFTER reranking:  0
+Length of docs to format:  0
+Cohere Reranking - Number of documents BEFORE reranking:  6
+Cohere Reranking - Documents marked as relevant:  ['029_7.pdf', '029_8.pdf', '137_1.pdf']
+Cohere Reranking - Documents marked as not relevant:  ['131_1.pdf', '052_4.pdf', '132_4.pdf']
+Cohere - Number of documents AFTER reranking:  5
+document=None index=0 relevance_score=0.99528164 - ./../raw_data/files/029_7.pdf__0
+document=None index=2 relevance_score=0.9783019 - ./../raw_data/files/137_1.pdf__1
+document=None index=4 relevance_score=0.97018343 - ./../raw_data/files/029_7.pdf__1
+document=None index=7 relevance_score=0.89386654 - ./../raw_data/files/137_1.pdf__2
+document=None index=1 relevance_score=0.84221536 - ./../raw_data/files/029_8.pdf__0
+Length of docs to format:  5
+
+
+LLM Reranking - Number of documents BEFORE reranking:  16
+LLM Reranking - Documents marked as relevant:  ['./../raw_data/files/034_1.pdf__4', './../raw_data/files/034_2.pdf__1', './../raw_data/files/034_2.pdf__0', './../raw_data/files/034_1.pdf__5', './../raw_data/files/034_1.pdf__1', './../raw_data/files/034_1.pdf__2', './../raw_data/files/034_2.pdf__2', './../raw_data/files/034_1.pdf__3']
+LLM Reranking - Documents marked as not relevant:  ['./../raw_data/files/026_1.pdf__3', './../raw_data/files/052_5.pdf__0', './../raw_data/files/029_8.pdf__0', './../raw_data/files/026_1.pdf__2', './../raw_data/files/029_7.pdf__2', './../raw_data/files/141_2.pdf__4', './../raw_data/files/137_1.pdf__1', './../raw_data/files/092_1.pdf__3']
+LLM Reranking - Number of documents AFTER reranking:  8
+Length of docs to format:  8
+Cohere Reranking - Number of documents BEFORE reranking:  17
+Cohere Reranking - Documents marked as relevant:  ['./../raw_data/files/034_1.pdf__4', './../raw_data/files/034_2.pdf__1', './../raw_data/files/034_2.pdf__0', './../raw_data/files/034_1.pdf__5', './../raw_data/files/034_1.pdf__1', './../raw_data/files/034_1.pdf__2', './../raw_data/files/034_1.pdf__0', './../raw_data/files/034_2.pdf__2', './../raw_data/files/034_1.pdf__3']
+Cohere Reranking - Documents marked as not relevant:  ['./../raw_data/files/026_1.pdf__3', './../raw_data/files/052_5.pdf__0', './../raw_data/files/029_8.pdf__0', './../raw_data/files/026_1.pdf__2', './../raw_data/files/029_7.pdf__2', './../raw_data/files/141_2.pdf__4', './../raw_data/files/137_1.pdf__1', './../raw_data/files/092_1.pdf__3']
+Cohere - Number of documents AFTER reranking:  5
+document=None index=1 relevance_score=0.9901782 - ./../raw_data/files/034_2.pdf__1
+document=None index=9 relevance_score=0.98340684 - ./../raw_data/files/034_1.pdf__0
+document=None index=7 relevance_score=0.96885616 - ./../raw_data/files/034_1.pdf__1
+document=None index=15 relevance_score=0.92345434 - ./../raw_data/files/034_1.pdf__3
+document=None index=0 relevance_score=0.8976953 - ./../raw_data/files/034_1.pdf__4
+Length of docs to format:  5
+
+
+LLM Reranking - Number of documents BEFORE reranking:  15
+LLM Reranking - Documents marked as relevant:  ['034_1.pdf__3', '034_1.pdf__4', '034_1.pdf__2', '034_1.pdf__5']
+LLM Reranking - Documents marked as not relevant:  ['141_2.pdf__2', '141_2.pdf__4', '033bis_1.pdf__0', '026_1.pdf__3', '029_9.pdf__1', '034_2.pdf__1', '026_1.pdf__2', '059_1.pdf__7', '052_5.pdf__0', '092_1.pdf__3', '132_6.pdf__0']
+LLM Reranking - Number of documents AFTER reranking:  0
+Length of docs to format:  0
+Cohere Reranking - Number of documents BEFORE reranking:  15
+Cohere Reranking - Documents marked as relevant:  ['034_1.pdf__3', '034_1.pdf__4', '034_1.pdf__2']
+Cohere Reranking - Documents marked as not relevant:  ['034_1.pdf__5', '141_2.pdf__2', '141_2.pdf__4', '033bis_1.pdf__0', '026_1.pdf__3', '029_9.pdf__1', '034_2.pdf__1', '026_1.pdf__2', '059_1.pdf__7', '052_5.pdf__0', '092_1.pdf__3', '132_6.pdf__0']
+Cohere - Number of documents AFTER reranking:  5
+document=None index=0 relevance_score=0.98384714 - ./../raw_data/files/034_1.pdf__3
+document=None index=1 relevance_score=0.70851517 - ./../raw_data/files/034_1.pdf__4
+document=None index=9 relevance_score=0.2150209 - ./../raw_data/files/034_2.pdf__1
+document=None index=2 relevance_score=0.08166611 - ./../raw_data/files/034_1.pdf__2
+document=None index=7 relevance_score=0.043936532 - ./../raw_data/files/026_1.pdf__3
+Length of docs to format:  5
+
+
+LLM Reranking - Number of documents BEFORE reranking:  19
+LLM Reranking - Documents marked as relevant:  ['./../raw_data/files/105_1.pdf__5', './../raw_data/files/048_1.pdf__3', './../raw_data/files/048_1.pdf__9', './../raw_data/files/048_1.pdf__4', './../raw_data/files/048_1.pdf__0', './../raw_data/files/036_3.pdf__2', './../raw_data/files/048_2.pdf__6', './../raw_data/files/048_1.pdf__5', './../raw_data/files/048_2.pdf__11', './../raw_data/files/048_2.pdf__9', './../raw_data/files/048_2.pdf__3', './../raw_data/files/020_3.pdf__0', './../raw_data/files/048_2.pdf__7', './../raw_data/files/045_14.pdf__0', './../raw_data/files/048_1.pdf__7']
+LLM Reranking - Documents marked as not relevant:  ['./../raw_data/files/029_10.pdf__1', './../raw_data/files/029_10.pdf__2', './../raw_data/files/020_2.pdf__2', './../raw_data/files/029_10.pdf__3']
+LLM Reranking - Number of documents AFTER reranking:  15
+Length of docs to format:  15
+Cohere Reranking - Number of documents BEFORE reranking:  17
+Cohere Reranking - Documents marked as relevant:  ['105_1.pdf', '048_1.pdf', '048_1.pdf__9', '048_1.pdf__4', '048_2.pdf__8', '020_2.pdf', '048_2.pdf__6', '048_1.pdf__5', '048_2.pdf__11', '048_2.pdf__9', '048_2.pdf__3', '020_3.pdf', '048_2.pdf__7', '045_14.pdf', '048_1.pdf__7']
+Cohere Reranking - Documents marked as not relevant:  ['029_10.pdf', '029_4.pdf']
+Cohere - Number of documents AFTER reranking:  5
+document=None index=1 relevance_score=0.976038 - ./../raw_data/files/048_1.pdf__3
+document=None index=0 relevance_score=0.97414124 - ./../raw_data/files/105_1.pdf__5
+document=None index=12 relevance_score=0.94985574 - ./../raw_data/files/048_1.pdf__5
+document=None index=2 relevance_score=0.9462997 - ./../raw_data/files/048_1.pdf__9
+document=None index=18 relevance_score=0.93593454 - ./../raw_data/files/045_14.pdf__0
+Length of docs to format:  5
+
+
+LLM Reranking - Number of documents BEFORE reranking:  21
+LLM Reranking - Documents marked as relevant:  ['./../raw_data/files/034_2.pdf__2', './../raw_data/files/044_2.pdf__3', './../raw_data/files/044_2.pdf__1', './../raw_data/files/044_2.pdf__2', './../raw_data/files/034_2.pdf__1']
+LLM Reranking - Documents marked as not relevant:  ['./../raw_data/files/034_1.pdf__1', './../raw_data/files/052_5.pdf__0', './../raw_data/files/137_1.pdf__4', './../raw_data/files/039_7.pdf__2', './../raw_data/files/045_2.pdf__1', './../raw_data/files/044_9.pdf__0', './../raw_data/files/034_1.pdf__5', './../raw_data/files/044_5.pdf__2', './../raw_data/files/046_2.pdf__2', './../raw_data/files/131_1.pdf__2', './../raw_data/files/044_5.pdf__3', './../raw_data/files/036_3.pdf__3', './../raw_data/files/029_7.pdf__2', './../raw_data/files/029_5.pdf__0', './../raw_data/files/132_6.pdf__1', './../raw_data/files/029_7.pdf__1']
+LLM Reranking - Number of documents AFTER reranking:  5
+Length of docs to format:  5
+Cohere Reranking - Number of documents BEFORE reranking:  21
+Cohere Reranking - Documents marked as relevant:  ['./../raw_data/files/034_2.pdf__2', './../raw_data/files/044_2.pdf__3', './../raw_data/files/044_2.pdf__1', './../raw_data/files/034_1.pdf__1', './../raw_data/files/044_2.pdf__2', './../raw_data/files/034_1.pdf__5', './../raw_data/files/034_2.pdf__1']
+Cohere Reranking - Documents marked as not relevant:  ['./../raw_data/files/052_5.pdf__0', './../raw_data/files/137_1.pdf__4', './../raw_data/files/039_7.pdf__2', './../raw_data/files/045_2.pdf__1', './../raw_data/files/044_9.pdf__0', './../raw_data/files/044_5.pdf__2', './../raw_data/files/046_2.pdf__2', './../raw_data/files/131_1.pdf__2', './../raw_data/files/044_5.pdf__3', './../raw_data/files/036_3.pdf__3', './../raw_data/files/029_7.pdf__2', './../raw_data/files/029_5.pdf__0', './../raw_data/files/132_6.pdf__1', './../raw_data/files/029_7.pdf__1']
+Cohere - Number of documents AFTER reranking:  5
+document=None index=2 relevance_score=0.20979328 - ./../raw_data/files/044_2.pdf__1
+document=None index=3 relevance_score=0.005708034 - ./../raw_data/files/034_1.pdf__1
+document=None index=10 relevance_score=0.0025509123 - ./../raw_data/files/034_1.pdf__5
+document=None index=14 relevance_score=0.0024919678 - ./../raw_data/files/137_1.pdf__1
+document=None index=0 relevance_score=0.0024534282 - ./../raw_data/files/034_2.pdf__2
+Length of docs to format:  5

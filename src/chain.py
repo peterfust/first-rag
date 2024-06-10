@@ -26,26 +26,31 @@ def format_docs(docs_and_question):
     return {"context": docs, "question": docs_and_question['question']}
 
 
-def rerank_docs_cohere(docs_and_question):
-    print("Cohere - Number of docs BEFORE reranking: ", len(docs_and_question['context']))
-    docs_for_rerank = [doc.page_content for doc in docs_and_question['context']]
+def rerank_docs_cohere(data):
+    print("Cohere Reranking - Number of documents BEFORE reranking: ", len(data['rerank']))
+    print("Cohere Reranking - Documents marked as relevant: ", [doc['name'] for doc in data['rerank'] if doc['relevant']])
+    print("Cohere Reranking - Documents marked as not relevant: ",
+          [doc['name'] for doc in data['rerank'] if not doc['relevant']])
+    context = data['forward']['context']
+    page_content_list = [doc.page_content for doc in context]
     response = co.rerank(
         model="rerank-multilingual-v3.0",
-        query=docs_and_question['question'],
-        documents=docs_for_rerank,
+        query=data['forward']['question'],
+        documents=page_content_list,
         top_n=5,
     )
-    print("Cohere - Number of docs AFTER reranking: ", len(response.results))
+    print("Cohere - Number of documents AFTER reranking: ", len(response.results))
     for res in response.results:
-        metadata = docs_and_question['context'][res.index].metadata
+        metadata = context[res.index].metadata
         print(str(res) + ' - ' + metadata['source'] + '__' + str(metadata['page']))
-    reranked_docs = [docs_and_question['context'][res.index] for res in response.results]
-    docs_and_question['context'] = reranked_docs
-    return docs_and_question
+    reranked_docs = [context[res.index] for res in response.results]
+    return {'context': reranked_docs, 'question': data['forward']['question']}
 
 
 def create_reranking_prompt(docs_and_question):
-    documents = "\n".join(f"-===START==={doc.metadata['source']}__{doc.metadata['page']}  {doc.page_content} ===ENDE===" for i, doc in enumerate(docs_and_question['context']))
+    documents = "\n".join(
+        f"-===START==={doc.metadata['source']}__{doc.metadata['page']}  {doc.page_content} ===ENDE===" for i, doc in
+        enumerate(docs_and_question['context']))
 
     rerank_template = f"""Gestellte Frage: {docs_and_question['question']}
 
@@ -69,7 +74,8 @@ def create_reranking_prompt(docs_and_question):
 def postprocess_reranking(data):
     print("LLM Reranking - Number of documents BEFORE reranking: ", len(data['rerank']))
     print("LLM Reranking - Documents marked as relevant: ", [doc['name'] for doc in data['rerank'] if doc['relevant']])
-    print("LLM Reranking - Documents marked as not relevant: ", [doc['name'] for doc in data['rerank'] if not doc['relevant']])
+    print("LLM Reranking - Documents marked as not relevant: ",
+          [doc['name'] for doc in data['rerank'] if not doc['relevant']])
     relevant_docs_and_question = {'context': [], 'question': data['forward']['question']}
     for item in data['rerank']:
         if item['relevant']:
@@ -82,7 +88,15 @@ def postprocess_reranking(data):
     return relevant_docs_and_question
 
 
-def chain(retriever):
+def chain_with_openai_reranking(retriever):
+    return chain(retriever, RunnableLambda(postprocess_reranking))
+
+
+def chain_with_cohere_reranking(retriever):
+    return chain(retriever, RunnableLambda(rerank_docs_cohere))
+
+
+def chain(retriever, reranker=None):
     llm_template = """Du bist ein hilfreicher Assistent und beantwortest Fragen zum Steuerbuch in einem höflichen Ton. 
     Fasse alles in präzise und in klaren Worten zusammen. Verwende eine Liste mit Aufzählungszeichen, aber nur,
     wenn es hilfreich ist. Verwende den folgenden Kontext um die Frage am Ende zu beantworten. Gib nur eine Antwort, 
@@ -97,15 +111,15 @@ def chain(retriever):
     llm_prompt = PromptTemplate.from_template(llm_template)
 
     llm_rerank_chain = (
-        RunnableLambda(create_reranking_prompt)
-        | llm
-        | JsonOutputParser()
+            RunnableLambda(create_reranking_prompt)
+            | llm
+            | JsonOutputParser()
     )
 
     rag_chain = (
             {"context": retriever, "question": RunnablePassthrough()}
-            | RunnableParallel(rerank=llm_rerank_chain, forward=RunnablePassthrough()) | RunnableLambda(postprocess_reranking)
-            #| RunnableLambda(rerank_docs_cohere)
+            | RunnableParallel(rerank=llm_rerank_chain, forward=RunnablePassthrough())
+            | reranker
             | RunnableLambda(format_docs)
             | llm_prompt
             | llm
