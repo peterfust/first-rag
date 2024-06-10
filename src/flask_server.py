@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
-from src.load_documents_by_csv_parent_child import load_documents
 from src.chain import chain
+from src.load_documents_by_csv_parent_child import load_documents
 
 app = Flask(__name__)
 

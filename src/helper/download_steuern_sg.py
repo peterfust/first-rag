@@ -12,10 +12,10 @@ base_url = "/content/dam/sgch/steuern-finanzen/steuern/steuerbuch"
 
 # Ordner zum Speichern der heruntergeladenen PDFs
 download_folder = "/raw_data/files"
-os.makedirs(download_folder, exist_ok=True)
+os.makedirs("../../" + download_folder, exist_ok=True)
 
 # Pfad zur CSV-Datei
-csv_file = "../../raw_data/content.csv"
+csv_file = "../../raw_data/content-test.csv"
 
 def download_pdfs_and_create_csv(url, base_url, download_folder, csv_file):
     # Anfrage an die Website
