@@ -3,7 +3,7 @@ POST http://127.0.0.1:5000/rest/text-analytics
 Content-Type: application/json
 
 {
-    "question": "Kann man auch nur teilweise aus der Kirche austreten? Falls ja, was muss man beachten?"
+    "question": "Ich habe im letzen Jahr geheiratet, was muss ich beachten?"
 }
 
 ###
@@ -35,7 +35,7 @@ POST http://127.0.0.1:5000/rest/text-analytics
 Content-Type: application/json
 
 {
-  "question": "Was gibt es alles bezüglich Kinderabzug zu beachten?"
+  "question": "Zeige mir alle relevanten Punkte auf, die es im Zusammenhang mit Kindern und Steuern zu beachten gibt."
 }
 
 ###
@@ -43,5 +43,21 @@ POST http://127.0.0.1:5000/rest/text-analytics
 Content-Type: application/json
 
 {
-  "question": "Kann ich als Eigenheim Besitzer Abwassergebühren von den Steuern abziehen?"
+  "question": "Können Kosten, die im Zusammenhang mit der Ausübung meines Berufs entstehen, von den Steuern abgezogen werden? Falls ja, was muss ich beachten?"
+}
+
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+  "question": "Sind Einkünfte aus Liegenschaften relevant für die Steuern? Falls ja, was muss ich beachten?"
+}
+
+###
+POST http://127.0.0.1:5000/rest/text-analytics
+Content-Type: application/json
+
+{
+"question": "Gib mir eine Übersicht über alle Kosten, die ich bei unselbständiger Erwerbstätigkeit von den Steuern abziehen kann."
 }
